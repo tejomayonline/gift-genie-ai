@@ -1,5 +1,8 @@
 import OpenAI from "openai";
 import { autoResizeTextarea, checkEnvironment, setLoading } from "./utils.js";
+import { marked } from "marked";
+import DOMPurify from "dompurify";
+
 checkEnvironment();
 
 // Initialize an OpenAI client for your provider using env vars
@@ -76,7 +79,7 @@ async function handleGiftRequest(e) {
     console.log(giftSuggestions);
 
     // Display the gift suggestions
-    outputContent.textContent = giftSuggestions;
+    outputContent.innerHTML = DOMPurify.sanitize(marked.parse(giftSuggestions));
 
   } catch (error) {
     console.error(error)
